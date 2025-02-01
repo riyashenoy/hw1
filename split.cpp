@@ -18,6 +18,50 @@ void split(Node*& in, Node*& odds, Node*& evens)
 {
   /* Add code here */
 // WRITE YOUR CODE HERE
+
+  // keeps track of head for even and odd lists
+  static Node* evenHead = nullptr;
+  static Node* oddHead = nullptr;
+
+  // checks if empty and assigns right heads to each list
+  if(in == nullptr){
+    odds = oddHead;
+    evens = evenHead;
+    return;
+  }
+
+  // creates a new node based on the current in node
+  Node* nextVal = new Node(in->value, nullptr);
+
+  // checks if the value is even
+  if(in->value % 2 == 0){
+    if(evens != nullptr){
+      evens->next = nextVal;
+    }
+    else{
+      evenHead = nextVal;
+    }
+    evens = nextVal;
+  }
+  else{
+    if(odds != nullptr){
+      odds->next = nextVal;
+    }
+    else{
+      oddHead = nextVal; 
+    }
+    odds = nextVal; 
+  }
+
+  // temp stores current node, and moves on to next
+  Node* temp = in;
+  in = in->next;
+
+  // deletes old node
+  delete temp;
+
+  // recursive call to do the rest of list tht is inputted
+  split(in, odds, evens);
 }
 
 /* If you needed a helper function, write it here */
